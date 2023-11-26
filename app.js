@@ -2,6 +2,8 @@ require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 
+const jobsRouter = require('./routes/jobs');
+const authRouter = require('./routes/auth');
 const { connectDB } = require('./db/connect');
 const { notFound, errorHandler } = require('./middleware');
 
@@ -12,6 +14,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('jobs api');
 });
+
+app.use('/api/v1', authRouter);
+app.use('/api/v1/jobs', jobsRouter);
 
 app.use(notFound);
 app.use(errorHandler);
