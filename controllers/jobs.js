@@ -35,11 +35,35 @@ const createJob = async (req, res) => {
 };
 
 const updateJob = async (req, res) => {
-  res.send("updateJob");
+  const { id } = req.params;
+  const createdBy = req.user.userId;
+
+  const job = await Job.findOneAndUpdate(
+    {
+      _id: id,
+      createdBy,
+    },
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  if (!job) throw new NotFound("Job not found");
+
+  res.status(StatusCodes.OK).json({ job });
 };
 
 const deleteJob = async (req, res) => {
-  res.send("deleteJob");
+  const { id } = req.params;
+  const createdBy = req.user.userId;
+
+  await Job.findOneAndDelete({
+    _id: id,
+    createdBy,
+  });
+
+  res.status(StatusCodes.OK).json({ job: null });
 };
 
 module.exports = {
