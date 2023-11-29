@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('express-async-errors');
+const path = require('path');
 const express = require('express');
 
 // Security Packages
@@ -20,12 +21,18 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
+app.use(express.static(path.resolve(__dirname, './client/build')));
 app.use(express.json());
+
 app.use(helmet());
 app.use(xss());
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', auth, jobsRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+});
 
 app.use(notFound);
 app.use(errorHandler);
