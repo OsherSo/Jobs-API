@@ -21,6 +21,8 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 app.use(express.static(path.resolve(__dirname, './client/build')));
 app.use(express.json());
 
