@@ -43,7 +43,39 @@ const login = async (req, res) => {
   });
 };
 
+const updateUser = async (req, res) => {
+  const id = req.user.userId;
+  const { name, lastName, email, location } = req.body;
+
+  const user = await User.findOneAndUpdate(
+    { _id: id },
+    {
+      name,
+      lastName,
+      email,
+      location,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  const token = user.createJWT();
+
+  res.status(StatusCodes.OK).json({
+    user: {
+      name,
+      lastName,
+      email,
+      location,
+      token,
+    },
+  });
+};
+
 module.exports = {
   register,
   login,
+  updateUser,
 };
