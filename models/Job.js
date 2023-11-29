@@ -28,7 +28,6 @@ const jobSchema = new mongoose.Schema(
     },
     jobLocation: {
       type: String,
-      required: true,
       default: '',
     },
     createdBy: {
