@@ -8,12 +8,18 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     required: [true, 'Name is required'],
-    minLength: [3, 'Name must be at least 3 characters'],
     maxLength: [20, 'Name cannot exceed 20 characters'],
+  },
+  lastName: {
+    type: String,
+    trim: true,
+    maxLength: [20, 'lastName cannot exceed 20 characters'],
+    default: '',
   },
   email: {
     type: String,
     trim: true,
+    lowercase: true,
     required: [true, 'Email is required'],
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -25,6 +31,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Password is required'],
     minLength: [6, 'Password must be at least 6 characters'],
+  },
+  location: {
+    type: String,
+    trim: true,
+    maxLength: [20, 'location cannot exceed 20 characters'],
+    default: '',
   },
 });
 
