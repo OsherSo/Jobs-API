@@ -4,9 +4,12 @@ const Job = require('../models/Job');
 const { NotFound } = require('../errors');
 
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({
-    createdBy: req.user.userId,
-  });
+  const { search } = req.query;
+  const queryObj = { createdBy: req.user.userId };
+
+  if (search) queryObj.position = { $regex: search, $options: 'i' };
+
+  const jobs = await Job.find(queryObj);
 
   res.status(StatusCodes.OK).json({
     count: jobs.length,
