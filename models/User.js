@@ -7,24 +7,24 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true,
     lowercase: true,
-    required: [true, 'Please provide name'],
-    minLength: [3, ''],
-    maxLength: [20, ''],
+    required: [true, 'Name is required'],
+    minLength: [3, 'Name must be at least 3 characters'],
+    maxLength: [20, 'Name cannot exceed 20 characters'],
   },
   email: {
     type: String,
     trim: true,
-    required: [true, 'Please provide email'],
+    required: [true, 'Email is required'],
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Please provide valid email',
+      'Invalid email format',
     ],
     unique: true,
   },
   password: {
     type: String,
-    required: [true, 'Please provide password'],
-    minLength: [6, ''],
+    required: [true, 'Password is required'],
+    minLength: [6, 'Password must be at least 6 characters'],
   },
 });
 
