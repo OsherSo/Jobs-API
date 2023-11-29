@@ -1,5 +1,7 @@
 const express = require('express');
 
+const testUser = require('../middleware/testUser');
+
 const {
   getAllJobs,
   getSingleJob,
@@ -10,7 +12,11 @@ const {
 
 const router = express.Router();
 
-router.route('/').get(getAllJobs).post(createJob);
-router.route('/:id').get(getSingleJob).patch(updateJob).delete(deleteJob);
+router.route('/').get(getAllJobs).post(testUser, createJob);
+router
+  .route('/:id')
+  .get(getSingleJob)
+  .patch(testUser, updateJob)
+  .delete(testUser, deleteJob);
 
 module.exports = router;
